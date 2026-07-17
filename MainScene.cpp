@@ -1,0 +1,71 @@
+﻿#include "MainScene.h"
+#include "Suishou.h"
+
+MainScene::MainScene(const InitData& init)
+	:
+	IScene{ init },
+	actors_{},
+	timerEnemySpawn_{}
+{
+	actors_.enemies.reserve(128);
+
+	actors_.suishou = Suishou{ Scene::CenterF() - Vec2{150, 0} };
+}
+
+void MainScene::update()
+{
+	PutText(Format(actors_.enemies.size()), Vec2{ 10, 10 });
+
+	actors_.kobushi.update();
+
+	actors_.suishou.update();
+
+	// 敵スポーン
+	if (not timerEnemySpawn_.isRunning())
+	{
+		timerEnemySpawn_.restart(Duration{ SecondsF{ Random(0.5, 2.0) }});
+		actors_.enemies.push_back(Enemy{ Scene::Rect().rightCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+	}
+
+	for (auto& e : actors_.enemies)
+	{
+		e.update();
+	}
+
+	// 衝突判定
+	if (actors_.kobushi.collision())
+	{
+		for (auto& e : actors_.enemies)
+		{
+			if (not e.collision()) continue;
+
+			if (e.collision()->intersects(*actors_.kobushi.collision()))
+			{
+				e.hit(actors_.kobushi);
+				actors_.kobushi.hit(e);
+			}
+		}
+	}
+
+	// 範囲外に出た敵を削除
+	actors_.enemies.remove_if([](const Enemy& e) { return e.isOffscreen(); });
+}
+
+void MainScene::draw() const
+{
+	// BG
+	Scene::Rect().draw(Palette::White);
+	TextureAsset(U"room").resized(Scene::Size() * 1.2).drawAt(Scene::CenterF(), AlphaF(0.8));
+
+	//
+	actors_.suishou.draw();
+
+	// 敵
+	for (const auto& e : actors_.enemies)
+	{
+		e.draw();
+	}
+
+	// こぶし
+	actors_.kobushi.draw();
+}
