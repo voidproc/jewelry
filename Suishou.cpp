@@ -1,16 +1,26 @@
 ﻿#include "Suishou.h"
 #include "Enemy.h"
 
+namespace
+{
+	constexpr double SuishouSize = 160;
+	constexpr double SuishouCollisionSize = 55;
+	constexpr double InitialLife = 100;
+}
+
 Suishou::Suishou()
 	:
 	pos_{},
-	timerHit_{}
+	timerHit_{},
+	life_{ InitialLife }
 {
 }
 
 Suishou::Suishou(const Vec2& pos)
 	:
-	pos_{ pos }
+	pos_{ pos },
+	timerHit_{},
+	life_{ InitialLife }
 {
 }
 
@@ -20,6 +30,7 @@ void Suishou::update()
 
 void Suishou::draw() const
 {
+	// ダメージ時の振動、大きさ、色
 	Vec2 hitVibr{};
 	double scale = 1.0;
 	Color color = Palette::White;
@@ -34,9 +45,31 @@ void Suishou::draw() const
 		scale = 1.0 + 0.1 * Periodic::Sine1_1(1.2s);
 	}
 
-	TextureAsset(U"suishou")
-		.resized(160 * scale)
-		.drawAt(pos_ + hitVibr, color);
+	// 汗
+	if (life_ < 70.0)
+	{
+		Duration aseLoopTime = 0.2s;
+		if (life_ < 40.0) aseLoopTime = 0.14s;
+
+		const double t_ase = Periodic::Sawtooth0_1(aseLoopTime);
+		if (t_ase < 0.8)
+		{
+			TextureAsset(U"ase")
+				.resized(SuishouSize)
+				.drawAt(pos_ + Circular{ 70 + 30 * EaseOutSine(t_ase), 0_deg });
+		}
+	}
+
+	// 水晶
+	{
+		String asset = U"suishou";
+		if (life_ < 70.0) asset = U"suishou_ase1";
+
+		TextureAsset(asset)
+			.resized(SuishouSize * scale)
+			.drawAt(pos_ + hitVibr, color);
+	}
+
 
 	// Debug
 	if (collision())
@@ -49,7 +82,7 @@ Optional<Circle> Suishou::collision() const
 {
 	if (timerHit_.isRunning()) return none;
 
-	return Circle{ pos_, 55 };
+	return Circle{ pos_, SuishouCollisionSize };
 }
 
 void Suishou::hit(Enemy& enemy)
@@ -69,6 +102,8 @@ Vec2 Suishou::pos() const
 
 void Suishou::hit_()
 {
+	life_ -= 10.0;
+
 	if (not timerHit_.isRunning())
 	{
 		timerHit_.restart(0.4s);

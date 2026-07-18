@@ -25,4 +25,5 @@ private:
 
 	Vec2 pos_;
 	Timer timerHit_;
+	double life_;
 };
