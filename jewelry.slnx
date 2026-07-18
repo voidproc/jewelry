@@ -2,5 +2,5 @@
   <Configurations>
     <Platform Name="x64" />
   </Configurations>
-  <Project Path="jewelry.vcxproj" />
+  <Project Path="jewelry.vcxproj" Id="9b1f78d7-0c82-4f89-99a6-be76196d84df" />
 </Solution>

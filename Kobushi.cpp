@@ -2,22 +2,39 @@
 #include "Enemy.h"
 
 Kobushi::Kobushi()
-	: pos_{ Cursor::PosF() }
+	:
+	pos_{ Cursor::PosF() },
+	attackAngle_{ Math::HalfPi }
 {
 }
 
 void Kobushi::update()
 {
-	if ((MouseL | MouseR | MouseM).down() && not timerAttack_.isRunning())
+	const Vec2 cursorPos = Cursor::PosF();
+
+	if (not timerAttack_.isRunning())
 	{
-		timerAttack_.restart(0.3s);
+		const double normalizedX = Clamp(
+			(cursorPos.x - Scene::CenterF().x) / (Scene::Width() * 0.5),
+			-1.0,
+			1.0
+		);
+
+		// 画面中央では真下、左右端ではそれぞれ外側へ最大 45 度傾ける
+		attackAngle_ = Math::HalfPi - normalizedX * (Math::Pi / 4.0);
+
+		if ((MouseL | MouseR | MouseM).down())
+		{
+			timerAttack_.restart(0.3s);
+		}
 	}
 
-	pos_ = Cursor::PosF();
+	pos_ = cursorPos;
 
 	if (timerAttack_.isRunning())
 	{
-		pos_ += Vec2{ 96, 0 } * EaseOutExpo(timerAttack_.progress1_0());
+		const Vec2 attackOffset = Circular{ 96.0, attackAngle_ + Math::HalfPi };
+		pos_ += attackOffset * EaseOutExpo(timerAttack_.progress1_0());
 	}
 }
 
@@ -32,7 +49,10 @@ void Kobushi::draw() const
 		r = 2.5 + 8.0 * EaseInCubic(timerAttack_.progress1_0());
 	}
 
-	TextureAsset(U"kobushi").resized(150 * scale).drawAt(pos_ + RandomVec2(r));
+	TextureAsset(U"kobushi")
+		.resized(150 * scale)
+		.rotated(attackAngle_)
+		.drawAt(pos_ + RandomVec2(r));
 
 	// Debug
 	if (collision())

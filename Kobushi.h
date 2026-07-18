@@ -18,5 +18,6 @@ public:
 private:
 	Timer timerAttack_;
 	Vec2 pos_;
+	double attackAngle_;
 };
 
