@@ -44,10 +44,12 @@ void Main()
 	TextureAsset::Register(U"s14", U"image/s14.png");
 	TextureAsset::Register(U"room", U"image/room_yuka_flooring.png");
 
+	FontAsset::Register(U"text", FontMethod::MSDF, 32, U"font/GenEiAntiqueNv6-M.ttf");
+
 	App app;
 	app.add<TitleScene>(U"TitleScene");
 	app.add<MainScene>(U"MainScene");
-	app.init(U"MainScene", 0s);
+	app.init(U"TitleScene", 0s);
 
 	while (System::Update())
 	{

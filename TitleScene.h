@@ -8,5 +8,6 @@ public:
 	void draw() const override;
 
 private:
+	Stopwatch timeText_;
 	Stopwatch time_;
 };

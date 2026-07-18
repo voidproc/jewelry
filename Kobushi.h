@@ -7,7 +7,7 @@ class Kobushi
 public:
 	Kobushi();
 
-	void update();
+	void update(bool canAttack);
 
 	void draw() const;
 

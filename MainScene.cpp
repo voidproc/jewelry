@@ -41,10 +41,9 @@ void MainScene::update()
 	}
 
 	if (state_ == GameState::MainGame &&
-		not timeGameOver_.isRunning() &&
-		not timerReady_.isRunning())
+		not timeGameOver_.isRunning())
 	{
-		actors_.kobushi.update();
+		actors_.kobushi.update(not timerReady_.isRunning());
 
 		actors_.suishou.update();
 
@@ -153,14 +152,6 @@ void MainScene::draw() const
 	// 水晶
 	actors_.suishou.draw();
 
-	// ゲーム開始時の「追い払え」
-	if (timerReady_.isRunning())
-	{
-		TextureAsset(U"oiharae")
-			.resized(250 * (1.0 + 0.1 * Periodic::Sine1_1(0.7s)))
-			.drawAt(actors_.suishou.pos() + Vec2{ 160, -130 });
-	}
-
 	// 敵
 	for (const auto& e : actors_.enemies)
 	{
@@ -184,6 +175,18 @@ void MainScene::draw() const
 		.rounded(3.0)
 		.draw(Palette::Green.lerp(Palette::Lime, 0.3 + 0.2 * Periodic::Sine0_1(1.2s)));
 	TextureAsset(U"gauge").resized(450).drawAt(Scene::Rect().bottomCenter() + Vec2{0, -50});
+
+	// ゲーム開始時の「追い払え」
+	if (timerReady_.isRunning())
+	{
+		// ゲーム開始時に「追い払え」以外が暗い
+		Scene::Rect().draw(ColorF{ 0, 0.3 });
+
+		// 吹き出し「追い払え」
+		TextureAsset(U"oiharae")
+			.resized(250 * (1.0 + 0.1 * Periodic::Sine1_1(0.7s)))
+			.drawAt(actors_.suishou.pos() + Vec2{ 160, -130 });
+	}
 
 	// ゲームオーバー
 	if (timeGameOver_.isRunning())

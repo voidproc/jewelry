@@ -19,7 +19,7 @@ Kobushi::Kobushi()
 {
 }
 
-void Kobushi::update()
+void Kobushi::update(bool canAttack)
 {
 	const Vec2 cursorPos = Cursor::PosF();
 
@@ -27,7 +27,7 @@ void Kobushi::update()
 	const double normalizedX = Clamp((cursorPos.x - Scene::CenterF().x) / (Scene::Width() * 0.5), -1.0, 1.0);
 	attackAngle_ = Math::HalfPi - normalizedX * (Math::Pi / 4.0);
 
-	if (not timerAttack_.isRunning() || timerAttack_.progress0_1() > 0.5)
+	if (canAttack && (not timerAttack_.isRunning() || timerAttack_.progress0_1() > 0.5))
 	{
 		if ((MouseL | MouseR | MouseM).down())
 		{
@@ -101,15 +101,14 @@ void Kobushi::draw() const
 			.drawAt(Scene::CenterF() + Vec2{ 0, -200 });
 	}
 
-
 	// Debug
-	if (collision())
-	{
-		for (const auto& c : collisions())
-		{
-			c.drawFrame(1.5, Palette::Red);
-		}
-	}
+	//if (collision())
+	//{
+	//	for (const auto& c : collisions())
+	//	{
+	//		c.drawFrame(1.5, Palette::Red);
+	//	}
+	//}
 }
 
 Optional<RectF> Kobushi::collision() const
