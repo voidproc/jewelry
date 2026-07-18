@@ -40,6 +40,11 @@ void Main()
 	TextureAsset::Register(U"s13", U"image/s13.png");
 	TextureAsset::Register(U"s14", U"image/s14.png");
 	TextureAsset::Register(U"room", U"image/room_yuka_flooring.png");
+	AudioAsset::Register(U"swing1", U"sound/swing1.ogg");
+	AudioAsset::Register(U"swing2", U"sound/swing2.ogg");
+	AudioAsset::Register(U"damage1", U"sound/damage1.ogg");
+	AudioAsset::Register(U"damage2", U"sound/damage2.ogg");
+	AudioAsset::Register(U"powerup", U"sound/powerup.ogg");
 
 	App app;
 	app.add<MainScene>(U"MainScene");

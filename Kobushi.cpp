@@ -6,6 +6,13 @@ namespace
 	constexpr double KobushiSize = 175;
 	constexpr double KobushiCollisionSize = 120;
 	constexpr double KobushiAttackMove = 120;
+
+	void PlayAudioSwing()
+	{
+		String asset = Format(U"swing", Random(1, 2));
+		AudioAsset(asset).stopAllShots();
+		AudioAsset(asset).playOneShot();
+	}
 }
 
 Kobushi::Kobushi()
@@ -33,6 +40,8 @@ void Kobushi::update()
 		{
 			timerAttack_.restart(0.3s);
 			timerAttack2_.restart(0.24s);
+
+			PlayAudioSwing();
 		}
 	}
 

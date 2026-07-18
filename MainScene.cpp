@@ -118,8 +118,8 @@ void MainScene::draw() const
 	Scene::Rect().draw(Palette::White);
 	TextureAsset(U"room").resized(Scene::Size() * 1.2).drawAt(Scene::CenterF(), AlphaF(0.8));
 
-	// 看板
-	TextureAsset(U"kanban").resized(250).drawAt(Scene::Rect().topCenter() + Vec2{-100, 125});
+	//// 看板
+	//TextureAsset(U"kanban").resized(250).drawAt(Scene::Rect().topCenter() + Vec2{-100, 125});
 
 
 	// 水晶
@@ -151,10 +151,10 @@ void MainScene::draw() const
 	actors_.kobushi.draw();
 
 	// ゲージ
-	RectF{ Scene::Rect().bottomCenter() + Vec2{-128, -71}, SizeF{(450. * 877 / 1200), (450. * 112 / 1200)} }
-		.draw(ColorF{1.0, 0.3});
-	RectF{ Scene::Rect().bottomCenter() + Vec2{-128, -71}, SizeF{(450. * 877 / 1200) * actors_.suishou.life() / 100.0, (450. * 112 / 1200)} }
-		.rounded(3.0)
-		.draw(Palette::Green.lerp(Palette::Lime, 0.3 + 0.2 * Periodic::Sine0_1(1.2s)));
-	TextureAsset(U"gauge").resized(450).drawAt(Scene::Rect().bottomCenter() + Vec2{0, -50});
+	//RectF{ Scene::Rect().bottomCenter() + Vec2{-128, -71}, SizeF{(450. * 877 / 1200), (450. * 112 / 1200)} }
+	//	.draw(ColorF{1.0, 0.3});
+	//RectF{ Scene::Rect().bottomCenter() + Vec2{-128, -71}, SizeF{(450. * 877 / 1200) * actors_.suishou.life() / 100.0, (450. * 112 / 1200)} }
+	//	.rounded(3.0)
+	//	.draw(Palette::Green.lerp(Palette::Lime, 0.3 + 0.2 * Periodic::Sine0_1(1.2s)));
+	//TextureAsset(U"gauge").resized(450).drawAt(Scene::Rect().bottomCenter() + Vec2{0, -50});
 }
