@@ -26,4 +26,6 @@ private:
 	Stopwatch timeGameOver_;
 	Stopwatch timeClear_;
 	bool playedChiinAudio_;
+	Timer timerAdditionalSpawn_;
+	int32 hitEnemyCount_;
 };

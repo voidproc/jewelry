@@ -117,13 +117,13 @@ void Kobushi::draw() const
 	}
 
 	// Debug
-	if (collision())
-	{
-		for (const auto& c : collisions())
-		{
-			c.drawFrame(1.5, Palette::Red);
-		}
-	}
+	//if (collision())
+	//{
+	//	for (const auto& c : collisions())
+	//	{
+	//		c.drawFrame(1.5, Palette::Red);
+	//	}
+	//}
 }
 
 Optional<RectF> Kobushi::collision() const
@@ -165,13 +165,13 @@ void Kobushi::hit(Enemy& enemy)
 {
 	score_ += 1;
 
-	if (score_ == 13)
+	if (score_ == 19)
 	{
 		timerPowerup_.restart(2.5s);
 		hands_ = 2;
 		PlayAudio(U"powerup");
 	}
-	else if (score_ == 24)
+	else if (score_ == 35)
 	{
 		timerPowerup_.restart(2.5s);
 		hands_ = 3;

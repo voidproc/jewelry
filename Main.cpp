@@ -5,12 +5,11 @@
 
 void Main()
 {
-	// 背景真っ白
 	Scene::SetBackground(Palette::White);
-
-	// リサイズ可能に
 	Scene::SetResizeMode(ResizeMode::Keep);
 	Window::SetStyle(WindowStyle::Sizable);
+	Window::SetTitle(U"水晶泥棒 v1.0.0");
+	System::SetTerminationTriggers(UserAction::CloseButtonClicked);
 
 	// アセット
 	TextureAsset::Register(U"dorobou", Resource(U"image/dorobou.png"));
@@ -34,6 +33,8 @@ void Main()
 	TextureAsset::Register(U"danger3", Resource(U"image/danger3.png"));
 	TextureAsset::Register(U"clear", Resource(U"image/clear.png"));
 	TextureAsset::Register(U"arigatou", Resource(U"image/arigatou.png"));
+	TextureAsset::Register(U"tobaseru", Resource(U"image/tobaseru.png"));
+	TextureAsset::Register(U"num", Resource(U"image/num.png"));
 	TextureAsset::Register(U"s1", Resource(U"image/s1.png"));
 	TextureAsset::Register(U"s2", Resource(U"image/s2.png"));
 	TextureAsset::Register(U"s3", Resource(U"image/s3.png"));

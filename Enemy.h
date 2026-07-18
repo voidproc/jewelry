@@ -40,6 +40,8 @@ public:
 
 	bool active() const;
 
+	double time() const;
+
 private:
 	void hit_(bool enableSerifu);
 
@@ -54,4 +56,5 @@ private:
 	String serifuAsset_;
 	Optional<Vec2> serifuPos_;
 	EnemyType type_;
+	Stopwatch time_;
 };

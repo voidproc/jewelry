@@ -140,7 +140,7 @@ double Suishou::life() const
 
 void Suishou::hit_()
 {
-	life_ -= 10.0;
+	life_ -= 15.0;
 
 	if (not timerHit_.isRunning())
 	{

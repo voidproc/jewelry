@@ -19,7 +19,8 @@ Enemy::Enemy(const Vec2& pos, double time, Actors* actors)
 	timeHit_{ StartImmediately::No },
 	serifuAsset_{ Format(U"s", Random(1, 14)) },
 	serifuPos_{},
-	type_{ EnemyType::A }
+	type_{ EnemyType::A },
+	time_{ StartImmediately::Yes }
 {
 	// タイプ決定
 	if (RandomBool(0.2))
@@ -148,6 +149,11 @@ Vec2 Enemy::pos() const
 bool Enemy::active() const
 {
 	return state_ == EnemyState::Active;
+}
+
+double Enemy::time() const
+{
+	return time_.sF();
 }
 
 void Enemy::hit_(bool enableSerifu)
