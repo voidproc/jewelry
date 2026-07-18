@@ -89,12 +89,23 @@ void MainScene::draw() const
 	Scene::Rect().draw(Palette::White);
 	TextureAsset(U"room").resized(Scene::Size() * 1.2).drawAt(Scene::CenterF(), AlphaF(0.8));
 
-	//
+	// 看板
+	TextureAsset(U"kanban").resized(250).drawAt(Scene::Rect().topCenter() + Vec2{-100, 125});
+
+
+	// 水晶
 	actors_.suishou.draw();
 
 	// 敵
 	for (const auto& e : actors_.enemies)
 	{
+		// 影
+		if (e.active())
+		{
+			Ellipse{ e.pos() + Vec2{ 0, 60 }, 60, 20 }.draw(ColorF{ 0, 0.5 });
+		}
+
+		// 本体
 		e.draw();
 	}
 

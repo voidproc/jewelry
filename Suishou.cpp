@@ -71,6 +71,9 @@ void Suishou::draw() const
 		}
 	}
 
+	// 影
+	Ellipse{ pos_ + Vec2{ 0, 60 }, 60, 20 }.draw(ColorF{ 0, 0.5 });
+
 	// 水晶
 	{
 		String asset = U"suishou";

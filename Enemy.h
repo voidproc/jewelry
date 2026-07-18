@@ -27,6 +27,10 @@ public:
 
 	bool isOffscreen() const;
 
+	Vec2 pos() const;
+
+	bool active() const;
+
 private:
 	void hit_();
 
@@ -37,5 +41,7 @@ private:
 	Vec2 moveDead_;
 	EnemyState state_;
 	Stopwatch timeHit_;
+	String serifuAsset_;
+	Vec2 serifuPos_;
 };
 
