@@ -14,7 +14,7 @@ struct Actors;
 class Enemy
 {
 public:
-	Enemy(const Vec2& pos, Actors* actors);
+	Enemy(const Vec2& pos, double time, Actors* actors);
 
 	void update();
 

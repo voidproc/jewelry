@@ -7,7 +7,7 @@ namespace
 	constexpr double EnemyCollisionSize = 80;
 }
 
-Enemy::Enemy(const Vec2& pos, Actors* actors)
+Enemy::Enemy(const Vec2& pos, double time, Actors* actors)
 	:
 	actors_{ actors },
 	pos_{ pos },
@@ -19,7 +19,19 @@ Enemy::Enemy(const Vec2& pos, Actors* actors)
 	serifuAsset_{ Format(U"s", Random(1, 14)) },
 	serifuPos_{}
 {
-	speed_ = Random(60.0, 120.0);
+	if (time < 45.0)
+	{
+		speed_ = Random(60.0, 120.0);
+	}
+	else if (time < 75.0)
+	{
+		speed_ = Random(90.0, 180.0);
+
+	}
+	else
+	{
+		speed_ = Random(130.0, 300.0);
+	}
 }
 
 void Enemy::update()

@@ -20,6 +20,8 @@ public:
 
 	Vec2 pos() const;
 
+	double life() const;
+
 private:
 	void hit_();
 

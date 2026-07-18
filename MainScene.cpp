@@ -33,15 +33,29 @@ void MainScene::update()
 	{
 		if (not timerEnemySpawn_.isRunning())
 		{
+			std::pair<double, double> spawnTime;
+			if (time_ < 50s)
+			{
+				spawnTime = std::make_pair(0.7, 2.0);
+			}
+			else if (time_ < 75s)
+			{
+				spawnTime = std::make_pair(0.4, 1.0);
+			}
+			else
+			{
+				spawnTime = std::make_pair(0.1, 0.4);
+			}
+
 			timerEnemySpawn_.restart(Duration{ SecondsF{ Random(0.5, 2.0) } });
 
 			if (RandomBool())
 			{
-				actors_.enemies.push_back(Enemy{ Scene::Rect().rightCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+				actors_.enemies.push_back(Enemy{ Scene::Rect().rightCenter() + Vec2{ 0, Random(-250, 250) }, time_.sF(), &actors_});
 			}
 			else
 			{
-				actors_.enemies.push_back(Enemy{ Scene::Rect().leftCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+				actors_.enemies.push_back(Enemy{ Scene::Rect().leftCenter() + Vec2{ 0, Random(-250, 250) }, time_.sF(), &actors_ });
 			}
 
 			spawnCount_ += 1;
@@ -132,6 +146,13 @@ void MainScene::draw() const
 		e.draw();
 	}
 
+
 	// こぶし
 	actors_.kobushi.draw();
+
+	// ゲージ
+	RectF{ Scene::Rect().bottomCenter() + Vec2{-128, -71}, SizeF{(450. * 877 / 1200) * actors_.suishou.life() / 100.0, (450. * 112 / 1200)}}
+		.rounded(3.0)
+		.draw(Palette::Green.lerp(Palette::Lime, 0.3 + 0.2 * Periodic::Sine0_1(1.2s)));
+	TextureAsset(U"gauge").resized(450).drawAt(Scene::Rect().bottomCenter() + Vec2{0, -50});
 }

@@ -130,6 +130,11 @@ Vec2 Suishou::pos() const
 	return pos_;
 }
 
+double Suishou::life() const
+{
+	return Clamp(life_, 0.0, InitialLife);
+}
+
 void Suishou::hit_()
 {
 	life_ -= 10.0;
