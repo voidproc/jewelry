@@ -93,33 +93,33 @@ Resource(engine/texture/box-shadow/8.png)
 //
 //	Fonts
 //
-Resource(engine/font/mplus/mplus-1p-thin.ttf.zstdcmp)
-Resource(engine/font/mplus/mplus-1p-light.ttf.zstdcmp)
-Resource(engine/font/mplus/mplus-1p-regular.ttf.zstdcmp)
-Resource(engine/font/mplus/mplus-1p-medium.ttf.zstdcmp)
-Resource(engine/font/mplus/mplus-1p-bold.ttf.zstdcmp)
-Resource(engine/font/mplus/mplus-1p-heavy.ttf.zstdcmp)
-Resource(engine/font/mplus/mplus-1p-black.ttf.zstdcmp)
-Resource(engine/font/noto-cjk/NotoSansCJK-Regular.ttc.zstdcmp)
+//Resource(engine/font/mplus/mplus-1p-thin.ttf.zstdcmp)
+//Resource(engine/font/mplus/mplus-1p-light.ttf.zstdcmp)
+//Resource(engine/font/mplus/mplus-1p-regular.ttf.zstdcmp)
+//Resource(engine/font/mplus/mplus-1p-medium.ttf.zstdcmp)
+//Resource(engine/font/mplus/mplus-1p-bold.ttf.zstdcmp)
+//Resource(engine/font/mplus/mplus-1p-heavy.ttf.zstdcmp)
+//Resource(engine/font/mplus/mplus-1p-black.ttf.zstdcmp)
+//Resource(engine/font/noto-cjk/NotoSansCJK-Regular.ttc.zstdcmp)
 //Resource(engine/font/noto-cjk/NotoSansJP-Regular.otf.zstdcmp)
 
 //
 //	Emoji Fonts
 //
-Resource(engine/font/noto-emoji/NotoColorEmoji.ttf.zstdcmp)
-Resource(engine/font/noto-emoji/NotoEmoji-Regular.ttf.zstdcmp)
+//Resource(engine/font/noto-emoji/NotoColorEmoji.ttf.zstdcmp)
+//Resource(engine/font/noto-emoji/NotoEmoji-Regular.ttf.zstdcmp)
 
 //
 //	Icons
 //
-Resource(engine/font/fontawesome/fontawesome-brands.otf.zstdcmp)
-Resource(engine/font/fontawesome/fontawesome-solid.otf.zstdcmp)
-Resource(engine/font/materialdesignicons/materialdesignicons-webfont.ttf.zstdcmp)
+//Resource(engine/font/fontawesome/fontawesome-brands.otf.zstdcmp)
+//Resource(engine/font/fontawesome/fontawesome-solid.otf.zstdcmp)
+//Resource(engine/font/materialdesignicons/materialdesignicons-webfont.ttf.zstdcmp)
 
 //
 //	Sound Font
 //
-Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
+//Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 
 //////////////////////////////////////////////////////
 //
@@ -127,22 +127,34 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 //
 //////////////////////////////////////////////////////
 
-
-
-/* examples 
-
-	//
-	// Define your resource path inside `Resource()` macro.
-	// No double quotation marks and white spaces may appear.
-	//
-	Resource(example/siv3d-kun.png)		// ok
-	Resource(example/windmill.png)		// ok
-	Resource(assets/a b c.txt)			// error: contains white spaces
-	Resource("example/windmill.png")	// error: contains double quotation marks
-
-	//
-	// If your file contains a white space, define the identifier without using Resource() macro.
-	//
-	MYIDENTIFIER_1 FILE "assets/a b c.txt"
-	MYIDENTIFIER_2 FILE "level 1/map.dat"
-*/
+Resource(image/dorobou.png)
+Resource(image/suishou.png)
+Resource(image/suishou_ase1.png)
+Resource(image/suishou_ase2.png)
+Resource(image/kobushi.png)
+Resource(image/ase.png)
+Resource(image/powerup.png)
+Resource(image/yabai.png)
+Resource(image/abunai.png)
+Resource(image/kanban.png)
+Resource(image/oiharae.png)
+Resource(image/gauge.png)
+Resource(image/title.png)
+Resource(image/gameover.png)
+Resource(image/asondene.png)
+Resource(image/s1.png)
+Resource(image/s2.png)
+Resource(image/s3.png)
+Resource(image/s4.png)
+Resource(image/s5.png)
+Resource(image/s6.png)
+Resource(image/s7.png)
+Resource(image/s8.png)
+Resource(image/s9.png)
+Resource(image/s10.png)
+Resource(image/s11.png)
+Resource(image/s12.png)
+Resource(image/s13.png)
+Resource(image/s14.png)
+Resource(image/room_yuka_flooring.png)
+Resource(font/GenEiAntiqueNv6-M.ttf)
