@@ -46,16 +46,27 @@ void TitleScene::draw() const
 			RectF{ Arg::center = Scene::CenterF(), SizeF{ 700, 500 } });
 	}
 
-	// タイトルロゴ
 	if (time_.isRunning())
 	{
 		Scene::Rect().draw(ColorF{ 0, 0.5 * Saturate(time_.sF() / 0.3) });
 
+		// タイトルロゴ
 		if (time_ > 0.3s)
 		{
 			TextureAsset(U"title")
-				.resized(500 * (0.9 + 0.2 * Periodic::Sine1_1(0.9s)))
+				.resized(500)
 				.drawAt(Scene::CenterF() + Vec2{ 0, -100 });
 		}
+
+		// 始まるテキスト
+		if (time_ > 0.8s)
+		{
+			TextureAsset(U"start")
+				.resized(500 * (0.9 + 0.2 * Periodic::Sine1_1(0.9s)))
+				.drawAt(Scene::CenterF() + Vec2{ 0, 120 });
+		}
 	}
+
+
+
 }

@@ -26,6 +26,7 @@ void Main()
 	TextureAsset::Register(U"oiharae", Resource(U"image/oiharae.png"));
 	TextureAsset::Register(U"gauge", Resource(U"image/gauge.png"));
 	TextureAsset::Register(U"title", Resource(U"image/title.png"));
+	TextureAsset::Register(U"start", Resource(U"image/start.png"));
 	TextureAsset::Register(U"gameover", Resource(U"image/gameover.png"));
 	TextureAsset::Register(U"asondene", Resource(U"image/asondene.png"));
 	TextureAsset::Register(U"s1", Resource(U"image/s1.png"));

@@ -10,3 +10,6 @@
 - フローリングの部屋のイラスト
   - いらすとや
   - https://www.irasutoya.com/2017/01/blog-post_120.html
+- 効果音
+  - 効果音工房
+  - https://umipla.com
