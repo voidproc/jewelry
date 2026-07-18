@@ -21,6 +21,8 @@ public:
 	Vec2 pos() const;
 
 private:
+	void hit_();
+
 	Vec2 pos_;
 	Timer timerHit_;
 };

@@ -5,7 +5,7 @@ namespace
 {
 	constexpr double KobushiSize = 175;
 	constexpr double KobushiCollisionSize = 120;
-	constexpr double KobushiAttackMove = 96;
+	constexpr double KobushiAttackMove = 120;
 }
 
 Kobushi::Kobushi()
@@ -28,6 +28,7 @@ void Kobushi::update()
 		if ((MouseL | MouseR | MouseM).down())
 		{
 			timerAttack_.restart(0.3s);
+			timerAttack2_.restart(0.24s);
 		}
 	}
 
@@ -36,7 +37,7 @@ void Kobushi::update()
 	if (timerAttack_.isRunning())
 	{
 		const Vec2 attackOffset = Circular{ KobushiAttackMove, attackAngle_ + Math::HalfPi };
-		pos_ += attackOffset * EaseOutExpo(timerAttack_.progress1_0());
+		pos_ += attackOffset * EaseOutElastic(timerAttack2_.progress1_0());
 	}
 }
 
