@@ -2,6 +2,12 @@
 
 #include "Actors.h"
 
+enum class GameState
+{
+	MainGame,
+	GameOver,
+};
+
 class MainScene : public App::Scene
 {
 public:
@@ -16,4 +22,6 @@ private:
 	int32 wave_;
 	Timer timerReady_;
 	Stopwatch time_;
+	GameState state_;
+	Stopwatch timeGameOver_;
 };

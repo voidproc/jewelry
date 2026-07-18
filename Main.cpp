@@ -26,6 +26,8 @@ void Main()
 	TextureAsset::Register(U"oiharae", U"image/oiharae.png");
 	TextureAsset::Register(U"gauge", U"image/gauge.png");
 	TextureAsset::Register(U"title", U"image/title.png");
+	TextureAsset::Register(U"gameover", U"image/gameover.png");
+	TextureAsset::Register(U"asondene", U"image/asondene.png");
 	TextureAsset::Register(U"s1", U"image/s1.png");
 	TextureAsset::Register(U"s2", U"image/s2.png");
 	TextureAsset::Register(U"s3", U"image/s3.png");
@@ -45,7 +47,7 @@ void Main()
 	App app;
 	app.add<TitleScene>(U"TitleScene");
 	app.add<MainScene>(U"MainScene");
-	app.init(U"TitleScene", 0s);
+	app.init(U"MainScene", 0s);
 
 	while (System::Update())
 	{
