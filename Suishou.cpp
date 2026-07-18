@@ -102,10 +102,10 @@ void Suishou::draw() const
 
 
 	// Debug
-	if (collision())
-	{
-		collision()->drawFrame(1.5, Palette::Red);
-	}
+	//if (collision())
+	//{
+	//	collision()->drawFrame(1.5, Palette::Red);
+	//}
 }
 
 Optional<Circle> Suishou::collision() const

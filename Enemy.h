@@ -9,6 +9,15 @@ enum class EnemyState
 	Dead,
 };
 
+enum class EnemyType
+{
+	// 水晶に向かっていく
+	A,
+
+	// ランダムな方向に向かう
+	B,
+};
+
 struct Actors;
 
 class Enemy
@@ -38,10 +47,11 @@ private:
 	Vec2 pos_;
 	bool mirror_;
 	double speed_;
+	Vec2 moveDir_;//ランダム移動用
 	Vec2 moveDead_;
 	EnemyState state_;
 	Stopwatch timeHit_;
 	String serifuAsset_;
 	Optional<Vec2> serifuPos_;
+	EnemyType type_;
 };
-
