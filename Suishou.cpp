@@ -3,7 +3,8 @@
 
 Suishou::Suishou()
 	:
-	pos_{}
+	pos_{},
+	timerHit_{}
 {
 }
 
@@ -19,9 +20,17 @@ void Suishou::update()
 
 void Suishou::draw() const
 {
+	Vec2 hitVibr{};
+	double scale = 1.0;
+	if (timerHit_.isRunning())
+	{
+		hitVibr = RandomVec2(6.0);
+		scale = 0.8 + 0.4 * Periodic::Sine0_1(0.07s);
+	}
+
 	TextureAsset(U"suishou")
-		.resized(160)
-		.drawAt(pos_);
+		.resized(160 * scale)
+		.drawAt(pos_ + hitVibr);
 
 	// Debug
 	if (collision())
@@ -37,6 +46,14 @@ Optional<Circle> Suishou::collision() const
 
 void Suishou::hit(Enemy& enemy)
 {
+}
+
+void Suishou::hit(Kobushi& kobushi)
+{
+	if (not timerHit_.isRunning())
+	{
+		timerHit_.restart(0.4s);
+	}
 }
 
 Vec2 Suishou::pos() const

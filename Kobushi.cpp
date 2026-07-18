@@ -1,6 +1,13 @@
 ﻿#include "Kobushi.h"
 #include "Enemy.h"
 
+namespace
+{
+	constexpr double KobushiSize = 175;
+	constexpr double KobushiCollisionSize = 120;
+	constexpr double KobushiAttackMove = 96;
+}
+
 Kobushi::Kobushi()
 	:
 	pos_{ Cursor::PosF() },
@@ -12,17 +19,12 @@ void Kobushi::update()
 {
 	const Vec2 cursorPos = Cursor::PosF();
 
-	if (not timerAttack_.isRunning())
+	// 画面中央では真下、左右端ではそれぞれ外側へ最大 45 度傾ける
+	const double normalizedX = Clamp((cursorPos.x - Scene::CenterF().x) / (Scene::Width() * 0.5), -1.0, 1.0);
+	attackAngle_ = Math::HalfPi - normalizedX * (Math::Pi / 4.0);
+
+	if (not timerAttack_.isRunning() || timerAttack_.progress0_1() > 0.5)
 	{
-		const double normalizedX = Clamp(
-			(cursorPos.x - Scene::CenterF().x) / (Scene::Width() * 0.5),
-			-1.0,
-			1.0
-		);
-
-		// 画面中央では真下、左右端ではそれぞれ外側へ最大 45 度傾ける
-		attackAngle_ = Math::HalfPi - normalizedX * (Math::Pi / 4.0);
-
 		if ((MouseL | MouseR | MouseM).down())
 		{
 			timerAttack_.restart(0.3s);
@@ -33,7 +35,7 @@ void Kobushi::update()
 
 	if (timerAttack_.isRunning())
 	{
-		const Vec2 attackOffset = Circular{ 96.0, attackAngle_ + Math::HalfPi };
+		const Vec2 attackOffset = Circular{ KobushiAttackMove, attackAngle_ + Math::HalfPi };
 		pos_ += attackOffset * EaseOutExpo(timerAttack_.progress1_0());
 	}
 }
@@ -50,7 +52,7 @@ void Kobushi::draw() const
 	}
 
 	TextureAsset(U"kobushi")
-		.resized(150 * scale)
+		.resized(KobushiSize * scale)
 		.rotated(attackAngle_)
 		.drawAt(pos_ + RandomVec2(r));
 
@@ -65,7 +67,7 @@ Optional<RectF> Kobushi::collision() const
 {
 	if (not timerAttack_.isRunning()) return none;
 
-	return RectF{ Arg::center = pos_, 120 };
+	return RectF{ Arg::center = pos_, KobushiCollisionSize };
 }
 
 void Kobushi::hit(Enemy& enemy)

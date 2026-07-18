@@ -32,7 +32,7 @@ void MainScene::update()
 		e.update();
 	}
 
-	// 衝突判定
+	// 衝突判定（敵 vs こぶし）
 	if (actors_.kobushi.collision())
 	{
 		for (auto& e : actors_.enemies)
@@ -44,6 +44,15 @@ void MainScene::update()
 				e.hit(actors_.kobushi);
 				actors_.kobushi.hit(e);
 			}
+		}
+	}
+
+	// 衝突判定（水晶 vs こぶし）
+	if (actors_.kobushi.collision() && actors_.suishou.collision())
+	{
+		if (actors_.kobushi.collision()->intersects(*actors_.suishou.collision()))
+		{
+			actors_.suishou.hit(actors_.kobushi);
 		}
 	}
 
