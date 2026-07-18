@@ -1,7 +1,7 @@
 ﻿# include <Siv3D.hpp> // Siv3D v0.6.16
 
 #include "MainScene.h"
-
+#include "TitleScene.h"
 
 void Main()
 {
@@ -25,6 +25,7 @@ void Main()
 	TextureAsset::Register(U"kanban", U"image/kanban.png");
 	TextureAsset::Register(U"oiharae", U"image/oiharae.png");
 	TextureAsset::Register(U"gauge", U"image/gauge.png");
+	TextureAsset::Register(U"title", U"image/title.png");
 	TextureAsset::Register(U"s1", U"image/s1.png");
 	TextureAsset::Register(U"s2", U"image/s2.png");
 	TextureAsset::Register(U"s3", U"image/s3.png");
@@ -42,8 +43,9 @@ void Main()
 	TextureAsset::Register(U"room", U"image/room_yuka_flooring.png");
 
 	App app;
+	app.add<TitleScene>(U"TitleScene");
 	app.add<MainScene>(U"MainScene");
-	app.init(U"MainScene", 0s);
+	app.init(U"TitleScene", 0s);
 
 	while (System::Update())
 	{
