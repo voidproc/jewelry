@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 class Kobushi;
+class Suishou;
 
 enum class EnemyState
 {
@@ -22,10 +23,13 @@ public:
 	Optional<RectF> collision() const;
 
 	void hit(Kobushi& kobushi);
+	void hit(Suishou& suishou);
 
 	bool isOffscreen() const;
 
 private:
+	void hit_();
+
 	Actors* actors_;
 	Vec2 pos_;
 	double speed_;

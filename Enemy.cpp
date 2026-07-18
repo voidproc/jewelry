@@ -67,12 +67,22 @@ Optional<RectF> Enemy::collision() const
 
 void Enemy::hit(Kobushi& kobushi)
 {
-	state_ = EnemyState::Dead;
-	timeHit_.start();
-	moveDead_ = Circular{ Random(400.0, 800.0), Random(Math::TwoPi) };
+	hit_();
+}
+
+void Enemy::hit(Suishou& suishou)
+{
+	hit_();
 }
 
 bool Enemy::isOffscreen() const
 {
 	return not Scene::Rect().stretched(100).intersects(pos_);
+}
+
+void Enemy::hit_()
+{
+	state_ = EnemyState::Dead;
+	timeHit_.start();
+	moveDead_ = Circular{ Random(400.0, 800.0), Random(Math::TwoPi) };
 }

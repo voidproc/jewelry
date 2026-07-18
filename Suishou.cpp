@@ -27,6 +27,10 @@ void Suishou::draw() const
 		hitVibr = RandomVec2(6.0);
 		scale = 0.8 + 0.4 * Periodic::Sine0_1(0.07s);
 	}
+	else
+	{
+		scale = 1.0 + 0.1 * Periodic::Sine1_1(1.2s);
+	}
 
 	TextureAsset(U"suishou")
 		.resized(160 * scale)

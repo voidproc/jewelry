@@ -56,6 +56,22 @@ void MainScene::update()
 		}
 	}
 
+	// 衝突判定（水晶 vs 敵）
+	if (actors_.suishou.collision())
+	{
+		for (auto& e : actors_.enemies)
+		{
+			if (not e.collision()) continue;
+
+			if (e.collision()->intersects(*actors_.suishou.collision()))
+			{
+				e.hit(actors_.suishou);
+				actors_.suishou.hit(e);
+			}
+		}
+	}
+
+
 	// 範囲外に出た敵を削除
 	actors_.enemies.remove_if([](const Enemy& e) { return e.isOffscreen(); });
 }
