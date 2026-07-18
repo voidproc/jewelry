@@ -3,8 +3,8 @@
 
 namespace
 {
-	constexpr double SuishouSize = 160;
-	constexpr double SuishouCollisionSize = 55;
+	constexpr double SuishouSize = 180;
+	constexpr double SuishouCollisionSize = 60;
 	constexpr double InitialLife = 100;
 }
 
@@ -43,6 +43,9 @@ void Suishou::draw() const
 	else
 	{
 		scale = 1.0 + 0.1 * Periodic::Sine1_1(1.2s);
+		if (life_ < 70.0) scale = 1.0 + 0.1 * Periodic::Sine1_1(0.9s);
+		if (life_ < 40.0) scale = 1.0 + 0.1 * Periodic::Sine1_1(0.5s);
+
 	}
 
 	// 汗
@@ -56,7 +59,7 @@ void Suishou::draw() const
 		{
 			TextureAsset(U"ase")
 				.resized(SuishouSize)
-				.drawAt(pos_ + Circular{ 70 + 30 * EaseOutSine(t_ase), 0_deg });
+				.drawAt(pos_ + Circular{ 75 + 35 * EaseOutSine(t_ase), 0_deg });
 		}
 	}
 
@@ -64,6 +67,7 @@ void Suishou::draw() const
 	{
 		String asset = U"suishou";
 		if (life_ < 70.0) asset = U"suishou_ase1";
+		if (life_ < 40.0) asset = U"suishou_ase2";
 
 		TextureAsset(asset)
 			.resized(SuishouSize * scale)
