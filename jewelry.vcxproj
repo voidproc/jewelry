@@ -115,6 +115,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Kobushi.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -331,6 +332,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actors.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="Kobushi.h" />

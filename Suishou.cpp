@@ -1,5 +1,6 @@
 ﻿#include "Suishou.h"
 #include "Enemy.h"
+#include "Audio.h"
 
 namespace
 {
@@ -155,4 +156,7 @@ void Suishou::hit_()
 		showAbunai_ = true;
 		timerAbunai_.restart(2.5s);
 	}
+
+	PlayAudio(U"damage2");
+
 }

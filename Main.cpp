@@ -44,11 +44,11 @@ void Main()
 	TextureAsset::Register(U"s14", Resource(U"image/s14.png"));
 	TextureAsset::Register(U"room", Resource(U"image/room_yuka_flooring.png"));
 
-	AudioAsset::Register(U"swing1", U"sound/swing1.ogg");
-	AudioAsset::Register(U"swing2", U"sound/swing2.ogg");
-	AudioAsset::Register(U"damage1", U"sound/damage1.ogg");
-	AudioAsset::Register(U"damage2", U"sound/damage2.ogg");
-	AudioAsset::Register(U"powerup", U"sound/powerup.ogg");
+	AudioAsset::Register(U"swing1",  Resource(U"sound/swing1.ogg"));
+	AudioAsset::Register(U"swing2",  Resource(U"sound/swing2.ogg"));
+	AudioAsset::Register(U"damage1", Resource(U"sound/damage1.ogg"));
+	AudioAsset::Register(U"damage2", Resource(U"sound/damage2.ogg"));
+	AudioAsset::Register(U"powerup", Resource(U"sound/powerup.ogg"));
 
 	FontAsset::Register(U"text", FontMethod::MSDF, 32, Resource(U"font/GenEiAntiqueNv6-M.ttf"));
 

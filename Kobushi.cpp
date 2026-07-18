@@ -1,5 +1,6 @@
 ﻿#include "Kobushi.h"
 #include "Enemy.h"
+#include "Audio.h"
 
 namespace
 {
@@ -7,12 +8,6 @@ namespace
 	constexpr double KobushiCollisionSize = 120;
 	constexpr double KobushiAttackMove = 120;
 
-	void PlayAudioSwing()
-	{
-		String asset = Format(U"swing", Random(1, 2));
-		AudioAsset(asset).stopAllShots();
-		AudioAsset(asset).playOneShot();
-	}
 }
 
 Kobushi::Kobushi()

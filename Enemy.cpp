@@ -1,5 +1,6 @@
 ﻿#include "Enemy.h"
 #include "Actors.h"
+#include "Audio.h"
 
 namespace
 {
@@ -157,4 +158,6 @@ void Enemy::hit_(bool enableSerifu)
 
 	serifuPos_ = pos_;
 	if (not enableSerifu) serifuPos_ = none;
+
+	PlayAudio(U"damage1");
 }
