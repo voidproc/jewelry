@@ -17,8 +17,30 @@ Enemy::Enemy(const Vec2& pos, double time, Actors* actors)
 	state_{ EnemyState::Active },
 	timeHit_{ StartImmediately::No },
 	serifuAsset_{ Format(U"s", Random(1, 14)) },
-	serifuPos_{}
+	serifuPos_{},
+	type_{ EnemyType::A }
 {
+	// タイプ決定
+	if (RandomBool(0.5))
+	{
+		type_ = EnemyType::B;
+	}
+
+	// ランダムな方向の決定
+	if (type_ == EnemyType::B)
+	{
+		if (pos_.x > Scene::CenterF().x)
+		{
+			// 右端に生成
+			moveDir_ = Circular{ 1.0, 180_deg + Random(45_deg, 135_deg)};
+		}
+		else
+		{
+			moveDir_ = Circular{ 1.0, 0_deg + Random(45_deg, 135_deg) };
+		}
+	}
+
+	// 移動速度
 	if (time < 45.0)
 	{
 		speed_ = Random(60.0, 120.0);
@@ -32,16 +54,26 @@ Enemy::Enemy(const Vec2& pos, double time, Actors* actors)
 	{
 		speed_ = Random(130.0, 300.0);
 	}
+
 }
 
 void Enemy::update()
 {
 	if (state_ == EnemyState::Active)
 	{
-		// 水晶に向かってくる
-		const auto d = (actors_->suishou.pos() - pos_).withLength(speed_);
-		pos_ += d * Scene::DeltaTime();
-		mirror_ = (d.x > 0);
+		if (type_ == EnemyType::A)
+		{
+			// 水晶に向かってくる
+			const auto d = (actors_->suishou.pos() - pos_).withLength(speed_);
+			pos_ += d * Scene::DeltaTime();
+			mirror_ = (d.x > 0);
+		}
+		else if (type_ == EnemyType::B)
+		{
+			const auto d = moveDir_.withLength(speed_);
+			pos_ += d * Scene::DeltaTime();
+			mirror_ = (d.x > 0);
+		}
 	}
 	else if (state_ == EnemyState::Dead)
 	{
