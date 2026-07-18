@@ -23,6 +23,7 @@ void Main()
 	TextureAsset::Register(U"yabai", U"image/yabai.png");
 	TextureAsset::Register(U"abunai", U"image/abunai.png");
 	TextureAsset::Register(U"kanban", U"image/kanban.png");
+	TextureAsset::Register(U"oiharae", U"image/oiharae.png");
 	TextureAsset::Register(U"s1", U"image/s1.png");
 	TextureAsset::Register(U"s2", U"image/s2.png");
 	TextureAsset::Register(U"s3", U"image/s3.png");

@@ -12,4 +12,8 @@ public:
 private:
 	Actors actors_;
 	Timer timerEnemySpawn_;
+	int32 spawnCount_;
+	int32 wave_;
+	Timer timerReady_;
+	Stopwatch time_;
 };

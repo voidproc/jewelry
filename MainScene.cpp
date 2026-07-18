@@ -5,7 +5,11 @@ MainScene::MainScene(const InitData& init)
 	:
 	IScene{ init },
 	actors_{},
-	timerEnemySpawn_{}
+	timerEnemySpawn_{},
+	spawnCount_{ 0 },
+	wave_{ 0 },
+	timerReady_{ 2s, StartImmediately::Yes },
+	time_{ StartImmediately::No }
 {
 	actors_.enemies.reserve(128);
 
@@ -14,22 +18,33 @@ MainScene::MainScene(const InitData& init)
 
 void MainScene::update()
 {
+	// ゲーム開始時の演出待ち
+	if (timerReady_.reachedZero() && not time_.isRunning())
+	{
+		time_.start();
+	}
+
 	actors_.kobushi.update();
 
 	actors_.suishou.update();
 
 	// 敵スポーン
-	if (not timerEnemySpawn_.isRunning())
+	if (time_.isRunning())
 	{
-		timerEnemySpawn_.restart(Duration{ SecondsF{ Random(0.5, 2.0) }});
+		if (not timerEnemySpawn_.isRunning())
+		{
+			timerEnemySpawn_.restart(Duration{ SecondsF{ Random(0.5, 2.0) } });
 
-		if (RandomBool())
-		{
-			actors_.enemies.push_back(Enemy{ Scene::Rect().rightCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
-		}
-		else
-		{
-			actors_.enemies.push_back(Enemy{ Scene::Rect().leftCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+			if (RandomBool())
+			{
+				actors_.enemies.push_back(Enemy{ Scene::Rect().rightCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+			}
+			else
+			{
+				actors_.enemies.push_back(Enemy{ Scene::Rect().leftCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+			}
+
+			spawnCount_ += 1;
 		}
 	}
 
@@ -95,6 +110,14 @@ void MainScene::draw() const
 
 	// 水晶
 	actors_.suishou.draw();
+
+	// ゲーム開始時の「追い払え」
+	if (timerReady_.isRunning())
+	{
+		TextureAsset(U"oiharae")
+			.resized(250 * (1.0 + 0.1 * Periodic::Sine1_1(0.7s)))
+			.drawAt(actors_.suishou.pos() + Vec2{ 160, -130 });
+	}
 
 	// 敵
 	for (const auto& e : actors_.enemies)

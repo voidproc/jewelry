@@ -59,11 +59,11 @@ void Enemy::draw() const
 			.rotated(timeHit_.sF() * 16.0)
 			.drawAt(pos_ + RandomVec2(50.0 * Saturate(1.0 - timeHit_.sF() / 0.3)), color);
 
-		if (timeHit_ < 0.8s)
+		if (timeHit_ < 0.8s && serifuPos_)
 		{
 			TextureAsset(serifuAsset_)
 				.resized(180 * (0.7 + 0.7 * Periodic::Sine0_1(0.25s)))
-				.drawAt(serifuPos_ + Vec2{ 0, -50 } + RandomVec2(2.0));
+				.drawAt(*serifuPos_ + Vec2{ 0, -50 } + RandomVec2(2.0));
 		}
 	}
 
@@ -83,12 +83,12 @@ Optional<RectF> Enemy::collision() const
 
 void Enemy::hit(Kobushi& kobushi)
 {
-	hit_();
+	hit_(true);
 }
 
 void Enemy::hit(Suishou& suishou)
 {
-	hit_();
+	hit_(false);
 }
 
 bool Enemy::isOffscreen() const
@@ -106,10 +106,12 @@ bool Enemy::active() const
 	return state_ == EnemyState::Active;
 }
 
-void Enemy::hit_()
+void Enemy::hit_(bool enableSerifu)
 {
 	state_ = EnemyState::Dead;
 	timeHit_.start();
 	moveDead_ = Circular{ Random(400.0, 800.0), Random(Math::TwoPi) };
+
 	serifuPos_ = pos_;
+	if (not enableSerifu) serifuPos_ = none;
 }

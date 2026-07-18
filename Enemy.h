@@ -32,7 +32,7 @@ public:
 	bool active() const;
 
 private:
-	void hit_();
+	void hit_(bool enableSerifu);
 
 	Actors* actors_;
 	Vec2 pos_;
@@ -42,6 +42,6 @@ private:
 	EnemyState state_;
 	Stopwatch timeHit_;
 	String serifuAsset_;
-	Vec2 serifuPos_;
+	Optional<Vec2> serifuPos_;
 };
 
