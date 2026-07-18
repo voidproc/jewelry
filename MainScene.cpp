@@ -76,14 +76,14 @@ void MainScene::update()
 				}
 				else if (time_ < 55s)
 				{
-					spawnTime = std::make_pair(0.3, 0.5);
+					spawnTime = std::make_pair(0.4, 0.6);
 				}
 				else
 				{
-					spawnTime = std::make_pair(0.08, 0.3);
+					spawnTime = std::make_pair(0.2, 0.4);
 				}
 
-				timerEnemySpawn_.restart(Duration{ SecondsF{ Random(0.5, 2.0) } });
+				timerEnemySpawn_.restart(Duration{ SecondsF{ Random(spawnTime.first, spawnTime.second) } });
 
 				if (RandomBool())
 				{
@@ -117,7 +117,7 @@ void MainScene::update()
 
 					if (e.time() < 0.8 && not timerAdditionalSpawn_.isRunning())
 					{
-						timerAdditionalSpawn_.restart(Duration{ SecondsF{ Random(0.1, 0.3) }});
+						timerAdditionalSpawn_.restart(Duration{ SecondsF{ Random(0.15, 0.3) }});
 					}
 
 					hitEnemyCount_ += 1;
@@ -169,6 +169,14 @@ void MainScene::update()
 		playedChiinAudio_ = true;
 	}
 
+	if (timeClear_ > 6.5s)
+	{
+		if ((MouseL | MouseR | MouseM).down())
+		{
+			changeScene(U"TitleScene", 0);
+		}
+	}
+
 }
 
 void MainScene::draw() const
@@ -179,34 +187,6 @@ void MainScene::draw() const
 
 	// 看板
 	TextureAsset(U"kanban").resized(250).drawAt(Scene::Rect().topCenter() + Vec2{-40, 125});
-
-	// 追い払った数
-	const auto region = TextureAsset(U"num").resized(200).drawAt(Scene::Rect().tl() + Vec2{ 120, 50 });
-	FontAsset(U"text2")(Format(hitEnemyCount_)).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
-	FontAsset(U"text2")(Format(hitEnemyCount_)).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Blue);
-
-
-	// 危険度
-	if (time_ < 30s)
-	{
-		const auto region = TextureAsset(U"danger1").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
-		FontAsset(U"text2")(Format(30 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
-		FontAsset(U"text2")(Format(30 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Red);
-
-	}
-	else if (time_ < 55s)
-	{
-		const auto region = TextureAsset(U"danger2").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
-		FontAsset(U"text2")(Format(55 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
-		FontAsset(U"text2")(Format(55 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Red);
-	}
-	else
-	{
-		//85まで
-		const auto region = TextureAsset(U"danger3").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
-		FontAsset(U"text2")(Format(Max(0, 55+30 - time_.s()))).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
-		FontAsset(U"text2")(Format(Max(0, 55+30 - time_.s()))).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Red);
-	}
 
 	// 水晶
 	actors_.suishou.draw();
@@ -234,6 +214,34 @@ void MainScene::draw() const
 		.rounded(3.0)
 		.draw(Palette::Green.lerp(Palette::Lime, 0.3 + 0.2 * Periodic::Sine0_1(1.2s)));
 	TextureAsset(U"gauge").resized(450).drawAt(Scene::Rect().bottomCenter() + Vec2{0, -50});
+
+	// 追い払った数
+	const auto region = TextureAsset(U"num").resized(200).drawAt(Scene::Rect().tl() + Vec2{ 120, 50 });
+	FontAsset(U"text2")(Format(hitEnemyCount_)).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
+	FontAsset(U"text2")(Format(hitEnemyCount_)).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Blue);
+
+
+	// 危険度
+	if (time_ < 30s)
+	{
+		const auto region = TextureAsset(U"danger1").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		FontAsset(U"text2")(Format(30 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
+		FontAsset(U"text2")(Format(30 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Red);
+
+	}
+	else if (time_ < 55s)
+	{
+		const auto region = TextureAsset(U"danger2").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		FontAsset(U"text2")(Format(55 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
+		FontAsset(U"text2")(Format(55 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Red);
+	}
+	else
+	{
+		//85まで
+		const auto region = TextureAsset(U"danger3").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		FontAsset(U"text2")(Format(Max(0, 55 + 30 - time_.s()))).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
+		FontAsset(U"text2")(Format(Max(0, 55 + 30 - time_.s()))).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Red);
+	}
 
 	// ゲーム開始時の「追い払え」
 	if (timerReady_.isRunning())

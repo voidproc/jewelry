@@ -36,7 +36,7 @@ Suishou::Suishou(const Vec2& pos)
 void Suishou::update()
 {
 	// ちょっとずつ回復
-	life_ = Clamp(life_ + 1 * Scene::DeltaTime(), 0.0, InitialLife);
+	life_ = Clamp(life_ + 1.5 * Scene::DeltaTime(), 0.0, InitialLife);
 }
 
 void Suishou::draw() const
@@ -140,7 +140,7 @@ double Suishou::life() const
 
 void Suishou::hit_()
 {
-	life_ -= 15.0;
+	life_ -= 8.0;
 
 	if (not timerHit_.isRunning())
 	{

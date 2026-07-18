@@ -8,7 +8,7 @@ void Main()
 	Scene::SetBackground(Palette::White);
 	Scene::SetResizeMode(ResizeMode::Keep);
 	Window::SetStyle(WindowStyle::Sizable);
-	Window::SetTitle(U"水晶泥棒 v1.0.0");
+	Window::SetTitle(U"水晶泥棒 v1.1.0");
 	System::SetTerminationTriggers(UserAction::CloseButtonClicked);
 
 	// アセット
@@ -59,7 +59,10 @@ void Main()
 	AudioAsset::Register(U"chiin", Resource(U"sound/chiin.ogg"));
 
 	FontAsset::Register(U"text", FontMethod::MSDF, 32, Resource(U"font/GenEiAntiqueNv6-M.ttf"));
+	FontAsset::Load(U"text", U"ここはとある街のジュエリーショップ。ここではとても価値のあるすばらしい水晶玉が販売されているので、泥棒に目を付けられているらしい。君にはこのジュエリーショップの警備員となって、襲い来る泥棒たちを正義の鉄拳でたたきのめしてほしい。報酬ははずむので期待してくれたまえ。それに夜間の就労のため割り増しも付くから、文句ないだろう。多少けがをするかもしれないが、君は学生の頃からスポーツ万能だったし、国体にも行ったんだったな。だから多分大丈夫だろ。気を付けて任務にあたってくれ。私は他の業務で忙しいから、電話されても出れないかもしれないから。頼んだよ。期待している。素晴らしい成果を上げてくれ。ここで実績を積めば、さらに責任のある仕事も頼ませてもらうからな。これは君にしか頼めない仕事なんだ。健闘を祈る。");
+
 	FontAsset::Register(U"text2", FontMethod::MSDF, 32, Resource(U"font/KodomoRounded.otf"), FontStyle::Bold);
+
 
 	App app;
 	app.add<TitleScene>(U"TitleScene");

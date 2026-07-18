@@ -54,7 +54,7 @@ Enemy::Enemy(const Vec2& pos, double time, Actors* actors)
 	}
 	else
 	{
-		speed_ = Random(130.0, 300.0);
+		speed_ = Random(100.0, 220.0);
 	}
 }
 
