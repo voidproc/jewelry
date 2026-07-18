@@ -54,6 +54,4 @@ private:
 	String serifuAsset_;
 	Optional<Vec2> serifuPos_;
 	EnemyType type_;
-
 };
-
