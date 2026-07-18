@@ -26,4 +26,9 @@ private:
 	Vec2 pos_;
 	Timer timerHit_;
 	double life_;
+
+	Timer timerYabai_;
+	bool showYabai_;
+	Timer timerAbunai_;
+	bool showAbunai_;
 };

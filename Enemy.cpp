@@ -11,6 +11,7 @@ Enemy::Enemy(const Vec2& pos, Actors* actors)
 	:
 	actors_{ actors },
 	pos_{ pos },
+	mirror_{},
 	speed_{},
 	moveDead_{},
 	state_{ EnemyState::Active },
@@ -24,7 +25,9 @@ void Enemy::update()
 	if (state_ == EnemyState::Active)
 	{
 		// 水晶に向かってくる
-		pos_ += (actors_->suishou.pos() - pos_).withLength(speed_) * Scene::DeltaTime();
+		const auto d = (actors_->suishou.pos() - pos_).withLength(speed_);
+		pos_ += d * Scene::DeltaTime();
+		mirror_ = (d.x > 0);
 	}
 	else if (state_ == EnemyState::Dead)
 	{
@@ -39,6 +42,7 @@ void Enemy::draw() const
 	if (state_ == EnemyState::Active)
 	{
 		TextureAsset(U"dorobou")
+			.mirrored(mirror_)
 			.resized(EnemySize * Vec2{ 0.8 + 0.2 * Periodic::Sine0_1(1s), 0.93 + 0.07 * Periodic::Jump0_1(1s) })
 			.rotated(4_deg * Periodic::Sine1_1(0.8s))
 			.drawAt(pos_);

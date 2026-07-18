@@ -12,7 +12,11 @@ Suishou::Suishou()
 	:
 	pos_{},
 	timerHit_{},
-	life_{ InitialLife }
+	life_{ InitialLife },
+	timerYabai_{},
+	showYabai_{ false },
+	timerAbunai_{},
+	showAbunai_{ false }
 {
 }
 
@@ -20,7 +24,11 @@ Suishou::Suishou(const Vec2& pos)
 	:
 	pos_{ pos },
 	timerHit_{},
-	life_{ InitialLife }
+	life_{ InitialLife },
+	timerYabai_{},
+	showYabai_{ false },
+	timerAbunai_{},
+	showAbunai_{ false }
 {
 }
 
@@ -74,6 +82,21 @@ void Suishou::draw() const
 			.drawAt(pos_ + hitVibr, color);
 	}
 
+	// 吹き出し
+	if (timerYabai_.isRunning())
+	{
+		TextureAsset(U"yabai")
+			.resized(200 * (0.7 + 0.5 * Periodic::Sine0_1(0.4s)))
+			.drawAt(pos_ + Vec2{ 110, -50 });
+	}
+
+	if (timerAbunai_.isRunning())
+	{
+		TextureAsset(U"abunai")
+			.resized(200 * (0.7 + 0.5 * Periodic::Sine0_1(0.25s)))
+			.drawAt(pos_ + Vec2{ 110, -50 });
+	}
+
 
 	// Debug
 	if (collision())
@@ -111,5 +134,17 @@ void Suishou::hit_()
 	if (not timerHit_.isRunning())
 	{
 		timerHit_.restart(0.4s);
+	}
+
+	if (not showYabai_ && life_ < 70.0)
+	{
+		showYabai_ = true;
+		timerYabai_.restart(2.5s);
+	}
+
+	if (not showAbunai_ && life_ < 40.0)
+	{
+		showAbunai_ = true;
+		timerAbunai_.restart(2.5s);
 	}
 }

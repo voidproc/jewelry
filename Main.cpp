@@ -19,6 +19,9 @@ void Main()
 	TextureAsset::Register(U"suishou_ase2", U"image/suishou_ase2.png");
 	TextureAsset::Register(U"kobushi", U"image/kobushi.png");
 	TextureAsset::Register(U"ase", U"image/ase.png");
+	TextureAsset::Register(U"powerup", U"image/powerup.png");
+	TextureAsset::Register(U"yabai", U"image/yabai.png");
+	TextureAsset::Register(U"abunai", U"image/abunai.png");
 	TextureAsset::Register(U"room", U"image/room_yuka_flooring.png");
 
 	App app;

@@ -10,8 +10,12 @@ namespace
 
 Kobushi::Kobushi()
 	:
+	timerAttack_{},
+	timerAttack2_{},
 	pos_{ Cursor::PosF() },
-	attackAngle_{ Math::HalfPi }
+	attackAngle_{ Math::HalfPi },
+	score_{},
+	hands_{ 1 }
 {
 }
 
@@ -52,25 +56,109 @@ void Kobushi::draw() const
 		r = 2.5 + 8.0 * EaseInCubic(timerAttack_.progress1_0());
 	}
 
-	TextureAsset(U"kobushi")
-		.resized(KobushiSize * scale)
-		.rotated(attackAngle_)
-		.drawAt(pos_ + RandomVec2(r));
+	if (hands_ == 1)
+	{
+		TextureAsset(U"kobushi")
+			.resized(KobushiSize * scale)
+			.rotated(attackAngle_)
+			.drawAt(pos_ + RandomVec2(r));
+	}
+	else if (hands_ == 2)
+	{
+		TextureAsset(U"kobushi")
+			.resized(KobushiSize * scale)
+			.rotated(attackAngle_)
+			.drawAt(pos_ + Circular{ 60, attackAngle_ } + RandomVec2(r));
+
+		TextureAsset(U"kobushi")
+			.resized(KobushiSize * scale)
+			.rotated(attackAngle_)
+			.drawAt(pos_ + Circular{ 60, attackAngle_ + 180_deg } + RandomVec2(r));
+	}
+	else if (hands_ == 3)
+	{
+		TextureAsset(U"kobushi")
+			.resized(KobushiSize * scale)
+			.rotated(attackAngle_)
+			.drawAt(pos_ + RandomVec2(r));
+
+		TextureAsset(U"kobushi")
+			.resized(KobushiSize * scale)
+			.rotated(attackAngle_)
+			.drawAt(pos_ + Circular{ 100, attackAngle_ } + RandomVec2(r));
+
+		TextureAsset(U"kobushi")
+			.resized(KobushiSize * scale)
+			.rotated(attackAngle_)
+			.drawAt(pos_ + Circular{ 100, attackAngle_ + 180_deg } + RandomVec2(r));
+	}
+
+	// パワーアップ
+	if (timerPowerup_.isRunning())
+	{
+		TextureAsset(U"powerup")
+			.resized(400 * (0.5 + 1.5 * timerPowerup_.progress0_1() * Periodic::Sine0_1(0.6s)))
+			.drawAt(Scene::CenterF() + Vec2{ 0, -200 });
+	}
+
 
 	// Debug
 	if (collision())
 	{
-		collision()->drawFrame(1.5, Palette::Red);
+		for (const auto& c : collisions())
+		{
+			c.drawFrame(1.5, Palette::Red);
+		}
 	}
 }
 
 Optional<RectF> Kobushi::collision() const
 {
 	if (not timerAttack_.isRunning()) return none;
+	if (timerAttack_.progress0_1() > 0.7) return none;
 
 	return RectF{ Arg::center = pos_, KobushiCollisionSize };
 }
 
+Array<RectF> Kobushi::collisions() const
+{
+	Array<RectF> c;
+	if (not timerAttack_.isRunning()) return c;
+	if (timerAttack_.progress0_1() > 0.7) return c;
+
+	if (hands_ == 1)
+	{
+		c.push_back(RectF{ Arg::center = pos_, KobushiCollisionSize });
+	}
+	else if (hands_ == 2)
+	{
+		c.push_back(RectF{ Arg::center = pos_ + Circular{ 60, attackAngle_ } , KobushiCollisionSize });
+		c.push_back(RectF{ Arg::center = pos_ + Circular{ 60, attackAngle_ + 180_deg } , KobushiCollisionSize });
+
+	}
+	else if (hands_ == 3)
+	{
+		c.push_back(RectF{ Arg::center = pos_, KobushiCollisionSize });
+		c.push_back(RectF{ Arg::center = pos_ + Circular{ 100, attackAngle_ } , KobushiCollisionSize });
+		c.push_back(RectF{ Arg::center = pos_ + Circular{ 100, attackAngle_ + 180_deg } , KobushiCollisionSize });
+
+	}
+
+	return c;
+}
+
 void Kobushi::hit(Enemy& enemy)
 {
+	score_ += 1;
+
+	if (score_ == 4)
+	{
+		timerPowerup_.restart(2.5s);
+		hands_ = 2;
+	}
+	else if (score_ == 8)
+	{
+		timerPowerup_.restart(2.5s);
+		hands_ = 3;
+	}
 }

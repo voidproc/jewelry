@@ -32,6 +32,7 @@ private:
 
 	Actors* actors_;
 	Vec2 pos_;
+	bool mirror_;
 	double speed_;
 	Vec2 moveDead_;
 	EnemyState state_;

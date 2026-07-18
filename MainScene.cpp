@@ -9,13 +9,11 @@ MainScene::MainScene(const InitData& init)
 {
 	actors_.enemies.reserve(128);
 
-	actors_.suishou = Suishou{ Scene::CenterF() - Vec2{150, 0} };
+	actors_.suishou = Suishou{ Scene::CenterF() };
 }
 
 void MainScene::update()
 {
-	PutText(Format(actors_.enemies.size()), Vec2{ 10, 10 });
-
 	actors_.kobushi.update();
 
 	actors_.suishou.update();
@@ -24,7 +22,15 @@ void MainScene::update()
 	if (not timerEnemySpawn_.isRunning())
 	{
 		timerEnemySpawn_.restart(Duration{ SecondsF{ Random(0.5, 2.0) }});
-		actors_.enemies.push_back(Enemy{ Scene::Rect().rightCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+
+		if (RandomBool())
+		{
+			actors_.enemies.push_back(Enemy{ Scene::Rect().rightCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+		}
+		else
+		{
+			actors_.enemies.push_back(Enemy{ Scene::Rect().leftCenter() + Vec2{ 0, Random(-250, 250) }, &actors_ });
+		}
 	}
 
 	for (auto& e : actors_.enemies)
@@ -33,13 +39,13 @@ void MainScene::update()
 	}
 
 	// 衝突判定（敵 vs こぶし）
-	if (actors_.kobushi.collision())
+	for (auto& coll_k : actors_.kobushi.collisions())
 	{
 		for (auto& e : actors_.enemies)
 		{
 			if (not e.collision()) continue;
 
-			if (e.collision()->intersects(*actors_.kobushi.collision()))
+			if (e.collision()->intersects(coll_k))
 			{
 				e.hit(actors_.kobushi);
 				actors_.kobushi.hit(e);
@@ -48,11 +54,14 @@ void MainScene::update()
 	}
 
 	// 衝突判定（水晶 vs こぶし）
-	if (actors_.kobushi.collision() && actors_.suishou.collision())
+	for (auto& coll_k : actors_.kobushi.collisions())
 	{
-		if (actors_.kobushi.collision()->intersects(*actors_.suishou.collision()))
+		if (actors_.suishou.collision())
 		{
-			actors_.suishou.hit(actors_.kobushi);
+			if (coll_k.intersects(*actors_.suishou.collision()))
+			{
+				actors_.suishou.hit(actors_.kobushi);
+			}
 		}
 	}
 
