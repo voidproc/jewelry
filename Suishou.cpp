@@ -35,6 +35,8 @@ Suishou::Suishou(const Vec2& pos)
 
 void Suishou::update()
 {
+	// ちょっとずつ回復
+	life_ = Clamp(life_ + 1 * Scene::DeltaTime(), 0.0, InitialLife);
 }
 
 void Suishou::draw() const

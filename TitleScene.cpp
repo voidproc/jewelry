@@ -54,12 +54,12 @@ void TitleScene::draw() const
 		if (time_ > 0.3s)
 		{
 			TextureAsset(U"title")
-				.resized(500)
+				.resized(500 * (0.2 + Clamp((time_.sF() - 0.3) / 1.5, 0.0, 2.4)))
 				.drawAt(Scene::CenterF() + Vec2{ 0, -100 });
 		}
 
 		// 始まるテキスト
-		if (time_ > 0.8s)
+		if (time_ > 1.5s)
 		{
 			TextureAsset(U"start")
 				.resized(500 * (0.9 + 0.2 * Periodic::Sine1_1(0.9s)))

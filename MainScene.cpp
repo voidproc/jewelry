@@ -131,7 +131,7 @@ void MainScene::update()
 	}
 
 	// ゲームオーバー表示開始から少し待って遷移可能
-	if (timeGameOver_ > GameOverWaitTime + 0.5s)
+	if (timeGameOver_ > GameOverWaitTime + 1.5s)
 	{
 		if ((MouseL | MouseR | MouseM).down())
 		{
@@ -146,8 +146,22 @@ void MainScene::draw() const
 	Scene::Rect().draw(Palette::White);
 	TextureAsset(U"room").resized(Scene::Size() * 1.2).drawAt(Scene::CenterF(), AlphaF(0.8));
 
-	//// 看板
-	//TextureAsset(U"kanban").resized(250).drawAt(Scene::Rect().topCenter() + Vec2{-100, 125});
+	// 看板
+	TextureAsset(U"kanban").resized(250).drawAt(Scene::Rect().topCenter() + Vec2{-100, 125});
+
+	// 危険度
+	if (time_ < 50s)
+	{
+		TextureAsset(U"danger1").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+	}
+	else if (time_ < 75s)
+	{
+		TextureAsset(U"danger2").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+	}
+	else
+	{
+		TextureAsset(U"danger3").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+	}
 
 	// 水晶
 	actors_.suishou.draw();

@@ -22,7 +22,7 @@ Enemy::Enemy(const Vec2& pos, double time, Actors* actors)
 	type_{ EnemyType::A }
 {
 	// タイプ決定
-	if (RandomBool(0.5))
+	if (RandomBool(0.2))
 	{
 		type_ = EnemyType::B;
 	}

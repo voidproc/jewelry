@@ -29,6 +29,9 @@ void Main()
 	TextureAsset::Register(U"start", Resource(U"image/start.png"));
 	TextureAsset::Register(U"gameover", Resource(U"image/gameover.png"));
 	TextureAsset::Register(U"asondene", Resource(U"image/asondene.png"));
+	TextureAsset::Register(U"danger1", Resource(U"image/danger1.png"));
+	TextureAsset::Register(U"danger2", Resource(U"image/danger2.png"));
+	TextureAsset::Register(U"danger3", Resource(U"image/danger3.png"));
 	TextureAsset::Register(U"s1", Resource(U"image/s1.png"));
 	TextureAsset::Register(U"s2", Resource(U"image/s2.png"));
 	TextureAsset::Register(U"s3", Resource(U"image/s3.png"));

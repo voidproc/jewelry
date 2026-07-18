@@ -158,10 +158,12 @@ void Kobushi::hit(Enemy& enemy)
 	{
 		timerPowerup_.restart(2.5s);
 		hands_ = 2;
+		PlayAudio(U"powerup");
 	}
 	else if (score_ == 8)
 	{
 		timerPowerup_.restart(2.5s);
 		hands_ = 3;
+		PlayAudio(U"powerup");
 	}
 }
