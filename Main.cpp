@@ -32,6 +32,8 @@ void Main()
 	TextureAsset::Register(U"danger1", Resource(U"image/danger1.png"));
 	TextureAsset::Register(U"danger2", Resource(U"image/danger2.png"));
 	TextureAsset::Register(U"danger3", Resource(U"image/danger3.png"));
+	TextureAsset::Register(U"clear", Resource(U"image/clear.png"));
+	TextureAsset::Register(U"arigatou", Resource(U"image/arigatou.png"));
 	TextureAsset::Register(U"s1", Resource(U"image/s1.png"));
 	TextureAsset::Register(U"s2", Resource(U"image/s2.png"));
 	TextureAsset::Register(U"s3", Resource(U"image/s3.png"));
@@ -53,8 +55,10 @@ void Main()
 	AudioAsset::Register(U"damage1", Resource(U"sound/damage1.ogg"));
 	AudioAsset::Register(U"damage2", Resource(U"sound/damage2.ogg"));
 	AudioAsset::Register(U"powerup", Resource(U"sound/powerup.ogg"));
+	AudioAsset::Register(U"chiin", Resource(U"sound/chiin.ogg"));
 
 	FontAsset::Register(U"text", FontMethod::MSDF, 32, Resource(U"font/GenEiAntiqueNv6-M.ttf"));
+	FontAsset::Register(U"text2", FontMethod::MSDF, 32, Resource(U"font/KodomoRounded.otf"), FontStyle::Bold);
 
 	App app;
 	app.add<TitleScene>(U"TitleScene");

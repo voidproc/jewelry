@@ -24,5 +24,7 @@ private:
 	double attackAngle_;
 	int score_;
 	int hands_;
+	std::array<double, 3> attackOffsetScale_;
+	std::array<Vec2, 3> posList_;
 };
 

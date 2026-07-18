@@ -24,4 +24,6 @@ private:
 	Stopwatch time_;
 	GameState state_;
 	Stopwatch timeGameOver_;
+	Stopwatch timeClear_;
+	bool playedChiinAudio_;
 };

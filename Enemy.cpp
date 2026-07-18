@@ -42,11 +42,11 @@ Enemy::Enemy(const Vec2& pos, double time, Actors* actors)
 	}
 
 	// 移動速度
-	if (time < 45.0)
+	if (time < 30.0)
 	{
 		speed_ = Random(60.0, 120.0);
 	}
-	else if (time < 75.0)
+	else if (time < 55.0)
 	{
 		speed_ = Random(90.0, 180.0);
 

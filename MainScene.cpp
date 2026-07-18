@@ -1,5 +1,6 @@
 ﻿#include "MainScene.h"
 #include "Suishou.h"
+#include "Audio.h"
 
 namespace
 {
@@ -16,7 +17,9 @@ MainScene::MainScene(const InitData& init)
 	timerReady_{ 2s, StartImmediately::Yes },
 	time_{ StartImmediately::No },
 	state_{ GameState::MainGame },
-	timeGameOver_{ StartImmediately::No }
+	timeGameOver_{ StartImmediately::No },
+	timeClear_{ StartImmediately::No },
+	playedChiinAudio_{ false }
 {
 	actors_.enemies.reserve(128);
 
@@ -41,8 +44,15 @@ void MainScene::update()
 	}
 
 	if (state_ == GameState::MainGame &&
-		not timeGameOver_.isRunning())
+		not timeGameOver_.isRunning() &&
+		not timeClear_.isRunning())
 	{
+		// クリア判定
+		if (time_.s() > 85)
+		{
+			timeClear_.start();
+		}
+
 		actors_.kobushi.update(not timerReady_.isRunning());
 
 		actors_.suishou.update();
@@ -53,17 +63,17 @@ void MainScene::update()
 			if (not timerEnemySpawn_.isRunning())
 			{
 				std::pair<double, double> spawnTime;
-				if (time_ < 50s)
+				if (time_ < 30s)
 				{
 					spawnTime = std::make_pair(0.7, 2.0);
 				}
-				else if (time_ < 75s)
+				else if (time_ < 55s)
 				{
-					spawnTime = std::make_pair(0.4, 1.0);
+					spawnTime = std::make_pair(0.3, 0.5);
 				}
 				else
 				{
-					spawnTime = std::make_pair(0.1, 0.4);
+					spawnTime = std::make_pair(0.08, 0.3);
 				}
 
 				timerEnemySpawn_.restart(Duration{ SecondsF{ Random(0.5, 2.0) } });
@@ -138,6 +148,13 @@ void MainScene::update()
 			changeScene(U"TitleScene", 0);
 		}
 	}
+
+	if (not playedChiinAudio_ && timeGameOver_ > GameOverWaitTime)
+	{
+		PlayAudio(U"chiin");
+		playedChiinAudio_ = true;
+	}
+
 }
 
 void MainScene::draw() const
@@ -150,17 +167,25 @@ void MainScene::draw() const
 	TextureAsset(U"kanban").resized(250).drawAt(Scene::Rect().topCenter() + Vec2{-100, 125});
 
 	// 危険度
-	if (time_ < 50s)
+	if (time_ < 30s)
 	{
-		TextureAsset(U"danger1").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		const auto region = TextureAsset(U"danger1").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		FontAsset(U"text2")(Format(30 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
+		FontAsset(U"text2")(Format(30 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Blue);
+
 	}
-	else if (time_ < 75s)
+	else if (time_ < 55s)
 	{
-		TextureAsset(U"danger2").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		const auto region = TextureAsset(U"danger2").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		FontAsset(U"text2")(Format(55 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
+		FontAsset(U"text2")(Format(55 - time_.s())).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Blue);
 	}
 	else
 	{
-		TextureAsset(U"danger3").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		//85まで
+		const auto region = TextureAsset(U"danger3").resized(200).drawAt(Scene::Rect().tr() + Vec2{ -120, 50 });
+		FontAsset(U"text2")(Format(Max(0, 55+30 - time_.s()))).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 } + Vec2{ 3, 3 }, Palette::White);
+		FontAsset(U"text2")(Format(Max(0, 55+30 - time_.s()))).drawAt(48, region.bottomCenter() + Vec2{ 0, 32 }, Palette::Blue);
 	}
 
 	// 水晶
@@ -218,6 +243,26 @@ void MainScene::draw() const
 			TextureAsset(U"asondene")
 				.resized(400 * (0.9 + 0.4 * Periodic::Sine1_1(1.2s)))
 				.drawAt(Scene::CenterF() + Vec2{ 0, 140 });
+		}
+	}
+
+	// クリア
+	if (timeClear_.isRunning())
+	{
+		Scene::Rect().draw(Color{ Palette::White, 0 }.lerp(Palette::White, 0.5 * Saturate(timeClear_.sF() / 1.5)));
+
+		if (timeClear_ > 2.0s)
+		{
+			TextureAsset(U"clear")
+				.resized(800 * (0.2 + 0.8 * Saturate(timeClear_.sF() - 2.0) / 1.8))
+				.drawAt(Scene::CenterF());
+		}
+
+		if (timeClear_ > 5.5s)
+		{
+			TextureAsset(U"arigatou")
+				.resized(280 * (0.95 + 0.1 * Periodic::Sine1_1(0.7s)))
+				.drawAt(Scene::Rect().bl() + Vec2{ 130, -120 });
 		}
 	}
 }
