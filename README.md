@@ -4,6 +4,9 @@
 
 これは [あほげー](https://ahoge.info/) ゲームジャム用に作ったゲームです。15周年おめでとうございます。
 
+## ダウンロード
+- [suishou_dorobou_v1.1.0.zip](https://github.com/voidproc/jewelry/releases/download/v1.1.0/suishou_dorobou_v1.1.0.zip)
+
 ## ルール
 水晶泥棒をやっつけろ
 
