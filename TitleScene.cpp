@@ -10,7 +10,7 @@ TitleScene::TitleScene(const InitData& init)
 
 void TitleScene::update()
 {
-	if (not time_.isRunning())
+	if (not time_.isRunning() && timeText_ > 3s)
 	{
 		if ((MouseL | MouseR | MouseM).down())
 		{
